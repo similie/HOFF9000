@@ -1,4 +1,7 @@
 .DS_Store
 .env
 .venv
-__pycache__
+__pycache_
+.env_dare_30min
+.env_dili_30min
+.env_water_tank
