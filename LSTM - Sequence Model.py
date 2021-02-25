@@ -6,7 +6,7 @@
 ###################################################
 
 # MODEL CONFIG
-import ConfigFiles.ModelConfig as config
+import ModelConfig as config
 
 # THE USUAL SUSPECTS
 import pandas as pd
@@ -58,10 +58,11 @@ print ("y_test_data", y_test_data)
 print("y_test_data shape", y_test_data.shape)
 
 # FUTURE TIME SERIES SEQUENCE
-X_shift_data = LSTMhelpFunctions.future_time_series (config.data_intervals, 
+X_shift_data = LSTMhelpFunctions.future_time_series (config.hours,
+                                                    config.data_intervals, 
                                                     config.X_inputs)
 
-X_shift_data = LSTMhelpFunctions.extractTimeInfo(X_shift_data)
+X_shift_data = LSTMhelpFunctions.extractTimeInfo(config.X_inputs, X_shift_data)
 
 print ("X_shift_data", X_shift_data)
 print ("X_shift_data shape", X_shift_data.shape)

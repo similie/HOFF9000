@@ -54,10 +54,10 @@ def adjust_data (Data, time_steps):
 
     return Data, Data_lenght
 
-def future_time_series (data_intervals, X_inputs):
+def future_time_series (hours, data_intervals, X_inputs):
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    endtime = (datetime.now() + timedelta(hours=24)).strftime("%Y-%m-%d %H:%M:%S")
+    endtime = (datetime.now() + timedelta(hours = hours)).strftime("%Y-%m-%d %H:%M:%S")
     X_shift_index = pd.date_range(now, endtime, freq = data_intervals)
     X_shift_index = X_shift_index.floor(data_intervals)
     X_shift_data = pd.DataFrame(columns = X_inputs, index = X_shift_index)
@@ -136,15 +136,25 @@ def data_reshape (X_train_scaled, X_test_scaled, time_steps, X_train_length, X_t
 
     return X_train_reshaped, X_test_reshaped
 
-def extractTimeInfo (df):
+def extractTimeInfo (X_inputs, df):
 
     #FUNCTION TO EXTRACT AS A COLUMN DATE FEATURES (YEAR/MONTH/DAY/HOUR) FROM DATAFRAME INDEX
 
     df['Date'] = df.index
-    df['Date Seq'] = df.index.strftime("%s").astype(int)
-    df["Year"] = pd.to_datetime(df["Date"]).dt.strftime("%y").astype(int)
-    df["Month"] = pd.to_datetime(df["Date"]).dt.strftime("%m").astype(int)
-    df["Day"] = pd.to_datetime(df["Date"]).dt.strftime("%d").astype(int)
-    df["Hour"] = pd.to_datetime(df["Date"], format='%H:%M:%S').dt.hour.astype(int)
+    for column in X_inputs:
+        if column == 'Date Seq':
+            df['Date Seq'] = df.index.strftime("%s").astype(int)
+        elif column == 'Year':  
+            df["Year"] = pd.to_datetime(df["Date"]).dt.strftime("%y").astype(int)
+        elif column == 'Month':
+            df["Month"] = pd.to_datetime(df["Date"]).dt.strftime("%m").astype(int)
+        elif column == 'Day':
+            df["Day"] = pd.to_datetime(df["Date"]).dt.strftime("%d").astype(int)
+        elif column == 'Hour':
+            df["Hour"] = pd.to_datetime(df["Date"], format='%H:%M:%S').dt.hour.astype(int)
+        else: 
+            print ("Error: You have choosen an inexistent DateTime/Sequence variable")
+            quit()
+
     del df["Date"]
     return df
