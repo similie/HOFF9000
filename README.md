@@ -2,6 +2,8 @@
 
 [<img src="https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png" width="150px" />](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png)
 
+[<img src="https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png" height="150px" />](https://user-images.githubusercontent.com/5084787/113365120-3c3aeb00-9390-11eb-8d9f-27cc1fd31122.png)
+
 
 **Project Overview:**
 March 13th of 2020, Timor Leste experienced an extreme weather event which cost millions of dollars for the Dili urban area.
