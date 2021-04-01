@@ -1,6 +1,6 @@
 # HOFF9000
 
-![Similie Logo](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png){ width=250px}
+![Similie Logo][https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png]{ width=250px}
 ![Mercy Corps Logo](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png =250x250)
 
 **Project Overview:**
