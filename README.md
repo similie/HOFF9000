@@ -1,6 +1,7 @@
 # HOFF9000
 
-![Primary-solid Stack (1)](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png)
+![Similie Logo](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png =250x250)
+![Mercy Corps Logo](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png =250x250)
 
 **Project Overview:**
 March 13th of 2020, Timor Leste experienced an extreme weather event which cost millions of dollars for the Dili urban area.
