@@ -12,8 +12,6 @@ This repository is a collaboration project between [Similie](https://similie.org
 
 In its current iteration, we use data from a rang of low-cost IoT sensors gathering precipitation, river water levels, soil moisture, and other atmospheric parameters to train forecasted precipitation outputs. Our next phases will attempt to use these prediction models to adjust thresholds for what constitutes a potential early warning event. For example, when precipitation at station A records X and the water level at station B records Y, what is the probability of an event for area C? X and Y are optimizations that HOFF9000 will attempt to solve.
  
-This initial attempt was trialed in Timor-Leste where the lack of adequate weather catchment data, along with  deforestation, make for extreme and highly unpredictable impacts throught extreme weather patterns. 
-
 This initial attempt was trialed in Timor-Leste where the lack of adequate weather, water catchment, and other environmental data is scarce. Compounded by increasingly unpredictable climate change-based weather patterns and human-induced deforestation, flash flooding events have become a devastating force in an already vulnerable and resource poor economy. For example, on March 13th of 2020, Timor-Leste experienced an extreme weather event which cost millions of dollars for the Dili urban area.
 
 ![image](https://user-images.githubusercontent.com/29231033/113268610-867d8700-9312-11eb-999c-3f0d41a38868.png)
