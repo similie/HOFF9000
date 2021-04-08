@@ -50,5 +50,123 @@ The event  data was recorded by weather stations owned  by GoTL and Similie.
 - Forecast Fire Index values.
 - Use satellite timeseries images to better understand climate trends.
 
+**How it works**
+- HOFF9000 is built to integrate with Similie platform ONE. ONE collects different types of data including Weather Data.
+- It was made so it could continuously learn from ONE database without the need of human intervention.
+
+**Python Libraries used**
+joblib==0.17.0
+numpy==1.18.5
+psycopg2==2.8.6
+scikit-learn==0.23.2
+scipy==1.5.4
+threadpoolctl==2.1.0
+matplotlib==3.3.2
+pandas==1.1.3
+pandas-compat==0.1.1
+sshtunnel==0.4.0
+Keras==2.4.3
+tensorflow==2.3.1
+xlwt==1.3.0
+python-dotenv
+
+**Python Files Architecture**
+LSTM - Sequence Model.py:
+- Main file and backbone of the script
+- Start the script from here
+- It is used to calls other files and functions that will colect, shape, transform and inject the data into the model.
+
+ModelConfig.py:
+- Configuration file
+- Ideally its the only file that a user needs to change
+- You can define wether you are making a FULL trainning of a new model or Retraining an older model.
+- Contains the paths needed to save: the scaler, model weights, generated predictions etc
+- Here you can define the most important parameters to run the Sequential Model. Which Station, how many hours to forecast, size of data intervals, batchsize, number of epochs etc
+- It is possible select the time series features (X Inputs) used for the LSTM Model such as:
+  "Date Seq",
+  "Hour", 
+  "Day", 
+  "Month", 
+  "Year"
+ Currently you can select only from these 5 features.
+ More time series features can be added to the code such as trimesters, seasons, fortnights or other time trends. However this will need some code manipulation.
+
+- You can select the station type. 
+  Currently the station types available in ONE are Weather (for weather stations) and Water (for water tanks).
+
+- It is possible select the features which you want to relate to the time series (Y Inputs). Currently available features are:
+  **For Weather Stations:
+  "temperature",
+  "dew_point",
+  "T-DP Variance" (temperature and dewpoint variance),
+  "humidity", 
+  "pressure", 
+  "wind_speed", 
+  "wind_direction".
+  
+  **For Water Tanks:
+  "percent_full", 
+  "tank_health", 
+  "liters", 
+  "water_level"
+  
+  There are more features available but these are the ones successfully tested.
+  You can select only one or more features related with the station type choosen.
+
+- You need also to define the prediction output which should be closely related to Y Inputs:
+  Possible example for the Weather Station:
+  "Pred Temperature", 
+  "Pred Dew Point", 
+  "Pred T-DP Variance", 
+  "Pred Humidity", 
+  "Pred Pressure", 
+  "Pred Wind Speed", 
+  "Pred Wind Direction".
+ 
+DBQueryFunctions.py:
+- Queries ONE Platform DB according to the options selected in ModelConfig.py
+- This is the most important file since it is where the data is cleaned, sorted and merged for further usage.
+
+LSTMHelpFunctions.py:
+- It is an assortment of different useful functions that help the previous files work
+- Examples:
+  - Generate time series (future_time_series)
+  - Scalling data between 0 and 1 (data_scalling)
+  - Reshape Data (data_reshape)
+  - Etc
+- Note: Some of the functions present in this file may be deprecated.
+
+Model.py:
+- Here is where the Neural Network is defined by using the KERAS Library.
+- The model present in this file can easily be changed agnostically from the rest of the script
+- The Neural Network is currently defined as follows:
+  model = Sequential()
+        #First LSTM layer 
+  model.add(LSTM(units = 50, return_sequences = True, input_shape = (X_data_shape_0, X_data_shape_1)))
+        # Second LSTM layer  
+  model.add(LSTM(units = 50, return_sequences = True))
+        # Third LSTM layer 
+  model.add(LSTM(units = 50, return_sequences = True))
+        # Adding a fourth LSTM layer 
+  model.add(LSTM(units = 50))
+        # Adding the output layer
+  model.add(Dense(units = y_data_shape_1, activation = 'relu'))  # relu function keeps the model from giving negative outputs
+        # Compiling the RNN
+  model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['accuracy'])
+
+        # Fitting the RNN to the Training set
+  model.fit(X_data_reshaped, y_data_scaled, epochs = epochs, batch_size = batch_size)
+
+So far this has been the Neural Network that has provided the best results.
+However feel free to try other Neural Networks structures!
+
+PlotGenerator.py:
+- This file's purpose is to generate graphs for easier visualization of the predictions.
+- It is not required in Production Environments
+
+**Currently Missing from Repository**
+Unfortunatelly this repository does not yet contain the methods to execute proper Evaluation of the Deep Learning Model.
+We are hoping to add it soon!
+
 **Notes and Contributions**
 Currently, the solutions provided in this repository should be considered experimental and for development purposes only. Because this is a truly worthwhile cause and can have an impact on the livelihoods of millions living in underserved economies, we actively encourage contributions to the HOFF9000 project, and believe this to be a potential showcase into the power of opensource communities. Therefore, pull requests will be actively reviewed, tested, and accepted by the repository maintainers. 
