@@ -95,7 +95,8 @@ ModelConfig.py:
 - You can select the station type. Currently the station types available in ONE are Weather (for weather stations) and Water (for water tanks).
 
 - It is possible select the features which you want to relate to the time series (Y Inputs). Currently available features are:
-  **For Weather Stations:
+
+- **For Weather Stations:**
   - "temperature",
   - "dew_point",
   - "T-DP Variance" (temperature and dewpoint variance),
@@ -104,7 +105,7 @@ ModelConfig.py:
   - "wind_speed", 
   - "wind_direction".
   
-  **For Water Tanks:
+- **For Water Tanks:**
   - "percent_full", 
   - "tank_health", 
   - "liters", 
