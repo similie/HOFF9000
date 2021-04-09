@@ -89,8 +89,9 @@ ModelConfig.py:
   - "Day", 
   - "Month", 
   - "Year"
- Currently you can select only from these 5 features.
- More time series features can be added to the code such as trimesters, seasons, fortnights or other time trends. However this will need some code manipulation.
+
+- Currently you can select only from these 5 features.
+- More time series features can be added to the code such as trimesters, seasons, fortnights or other time trends. However this will need some code manipulation.
 
 - You can select the station type. Currently the station types available in ONE are Weather (for weather stations) and Water (for water tanks).
 
