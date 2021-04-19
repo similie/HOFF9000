@@ -114,8 +114,8 @@ ModelConfig.py:
 
 - **For River Level:**
   - "water_level"
-  - Note: River Level sensors are the same used in Water Tanks therefor the same features are available.
-  However river conditions are different from a tank hence we reccomend to use only "water_level" feature.
+  - Note: Water Tanks sensors are similar ultrasonic sensors used in River Level therefor the same features may apply.
+  However since river conditions are different from a tank we reccomend to use only the "water_level" feature.
   
 - There are more features available but these are the ones successfully tested.
 - You can select only one or more features related with the station type choosen.
