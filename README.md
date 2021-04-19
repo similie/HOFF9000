@@ -2,13 +2,11 @@
 
 [<img src="https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png" width="100px" />](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png)
 &nbsp;&nbsp;&nbsp;&nbsp;
-[<img src="https://user-images.githubusercontent.com/5084787/113365120-3c3aeb00-9390-11eb-8d9f-27cc1fd31122.png" height="100px" />](https://user-images.githubusercontent.com/5084787/113365120-3c3aeb00-9390-11eb-8d9f-27cc1fd31122.png)
-
 
 **Project Overview:**
 "Did anyone tell you... not to hassle the Hoff 9000?"
 
-This repository is a collaboration project between [Similie](https://similie.org) and [Mercy Corps](https://www.mercycorps.org/). We are building a localized early warning solution for data-poor economies and started the HOFF9000 project with the goal of leveraging machine learning algorithms geared toward predicting various indicators relevant in the detection of flash floods and other natural disaster occurrences. In the event of natural disaster, we seek to build affordable solutions where individuals living in underserved economies can have advanced warnings required to move their resources and their families to safety. HOFF9000 is a machine-learning component that offers predictive outputs of local environmental data aimed at improving our time before event metrics. Why HOFF9000? Well, it comes from one of our favorite movies, and we needed a name.
+This repository is a collaboration project between [Similie](https://similie.org). We are building a localized early warning solution for data-poor economies and started the HOFF9000 project with the goal of leveraging machine learning algorithms geared toward predicting various indicators relevant in the detection of flash floods and other natural disaster occurrences. In the event of natural disaster, we seek to build affordable solutions where individuals living in underserved economies can have advanced warnings required to move their resources and their families to safety. HOFF9000 is a machine-learning component that offers predictive outputs of local environmental data aimed at improving our time before event metrics. Why HOFF9000? Well, it comes from one of our favorite movies, and we needed a name.
 
 In its current iteration, we use data from a rang of low-cost IoT sensors gathering precipitation, river water levels, soil moisture, and other atmospheric parameters to train forecasted precipitation outputs. Our next phases will attempt to use these prediction models to adjust thresholds for what constitutes a potential early warning event. For example, when precipitation at station A records X and the water level at station B records Y, what is the probability of an event for area C? X and Y are optimizations that HOFF9000 will attempt to solve.
  
