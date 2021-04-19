@@ -146,7 +146,7 @@ def sort_dataset (df, Data, y_inputs, row):
         merge_column = pd.DataFrame(DataSet, columns = {"Date", y_inputs[x]})  
         df_db = pd.merge_ordered(df_db, merge_column, how="outer") 
     
-    df_db.reset_index(inplace=True)   
+    df_db.reset_index(inplace=True)
     df = pd.merge_ordered(df, df_db, how="outer")   
     print ("\nLOADING...\n")
     

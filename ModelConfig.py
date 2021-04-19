@@ -31,7 +31,7 @@ station = 4             # SELECT STATION ID FOR ANALYSIS Ex: Dare = 4; Similie =
 limit = 1               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE ALGORITHM
 hours = 24              # NUMBER OF HOURS FOR FORECAST 
 data_intervals = '30T'  # SELECT THE DATA INTERVALS FOR THE DATA 10T/30T/1H/1D etc (T = minutes)
-shift_steps = 48        # data_intervals * shift_steps = X DAYS TO LOOK AHEAD
+shift_steps = 48      # data_intervals * shift_steps = X DAYS TO LOOK AHEAD
 batch_size = 1          # NUMBER OF SAMPLES PROPAGATED THROUGH THE NETWORK
 epochs = 100            # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
 
@@ -56,12 +56,12 @@ y_inputs = ["temperature", "dew_point", "T-DP Variance", "humidity", "pressure",
 
 # WATER TANK FEATURES AVAILABLE 
 
-#y_inputs = ["percent_full", "tank_health"] 
+#y_inputs = ["percent_full", "tank_health", "liters", "water_level"] 
 
 # pred_output FEATURES THAT WILL BE PREDICTED
 
 pred_output = ["Pred Temperature", "Pred Dew Point", "Pred T-DP Variance", "Pred Humidity", "Pred Pressure", "Pred Wind Speed", "Pred Wind Direction"] # PREDICTED OUTPUTS FOR WEATHER
-#pred_output = ["Pred percent_full", "Pred tank_health"]
+#pred_output = ["Pred percent_full", "Pred tank_health", "Pred liters", "Pred water_level"]
 
 ############################
 # FULL TRAINING FILE PATHS #
