@@ -1,6 +1,8 @@
 # MODEL CONFIG
 import ModelConfig as config
 
+import copy
+
 # THE USUAL SUSPECTS
 import psycopg2
 import pandas as pd
@@ -45,13 +47,15 @@ def GetListStation (station, limit):
 
         # GET STATION AND NEARBY STATIONS (ACCORDING TO LIMIT) GEO LOCATION
 
-        GetStations.execute("SELECT ST_AsText(station.geo) FROM public.station WHERE id = %s;", (station,))
+        GetStations.execute("SELECT ST_AsText(station.geo) FROM public.station WHERE station_type = 1 AND id = %s;", (station,))
         StationGeo = GetStations.fetchone()
         StationGeo =  ''.join(StationGeo) 
         StationGeo = StationGeo.replace("'", "")
-        print (StationGeo)
-        GetStations.execute("SELECT id FROM public.station WHERE station_state != 979 ORDER BY ST_Distance(station.geo,'SRID=4326; {}') LIMIT {};".format(StationGeo, limit))
+        print ("Station Location:", StationGeo)
+        #GetStations.execute("SELECT id FROM public.station WHERE station_type = 1 AND station_state != 979 ORDER BY ST_Distance(station.geo,'SRID=4326; {}') LIMIT {};".format(StationGeo, limit))
+        GetStations.execute("SELECT id FROM public.station WHERE station_type = 1 AND station_state != 979 AND id != 55 ORDER BY ST_Distance(station.geo,'SRID=4326; {}') LIMIT {};".format(StationGeo, limit))
         ListStations = GetStations.fetchall()
+        print("Nearby Stations:", ListStations)
         return ListStations 
 
 def MergeStationsData   (ListStations,
@@ -62,16 +66,31 @@ def MergeStationsData   (ListStations,
                         last_dataset_row_path,
                         last_retrain_dataset_row_path):
         
+
         conn = psycopg2.connect(connect_db_info)
         GetStations = conn.cursor()
 
-        df = pd.DataFrame(columns = {"Date"})
+        df = pd.DataFrame(columns = ["Date"])
+
+        
 
         for row in ListStations:
 
+            y_input_format = copy.copy(y_inputs)
+            
             if full_training is True:
                 dataset_query = select_query (config.station_type, config.full_training)
-                GetStations.execute (dataset_query.format (repr(y_inputs)
+
+                print (dataset_query.format (repr(y_input_format)
+                                        .replace("'", "")
+                                        .replace('[','')
+                                        .replace(']','')
+                                        .replace('T-DP Variance', 'temperature - dew_point as variance')
+                                        , row)
+                                        .replace('(','')
+                                        .replace(',)','')) 
+                                
+                GetStations.execute (dataset_query.format (repr(y_input_format)
                                         .replace("'", "")
                                         .replace('[','')
                                         .replace(']','')
@@ -79,10 +98,11 @@ def MergeStationsData   (ListStations,
                                         , row)
                                         .replace('(','')
                                         .replace(',)',''))
-
-                Data = GetStations.fetchall()
-                df = sort_dataset (df, Data, y_inputs, row)
             
+                Data = GetStations.fetchall()
+                df = sort_dataset (df, Data, y_input_format, row)
+
+                
             elif full_training is False: 
                 # Check last saved table to learn the last index entry
                 # Database query will start from that entry
@@ -95,14 +115,14 @@ def MergeStationsData   (ListStations,
 
                 dataset_query = select_query (config.station_type, config.full_training)
                 GetStations.execute(dataset_query.format (repr(y_inputs)
-                                                                    .replace("'", "")
-                                                                    .replace('[','')
-                                                                    .replace(']','')
-                                                                    .replace('T-DP Variance', 'temperature - dew_point as variance')
-                                                                    , row
-                                                                    , last_timestamp)
-                                                                    .replace('(','')
-                                                                    .replace(',)',''))
+                                                                .replace("'", "")
+                                                                .replace('[','')
+                                                                .replace(']','')
+                                                                .replace('T-DP Variance', 'temperature - dew_point as variance')
+                                                                , row
+                                                                , last_timestamp)
+                                                                .replace('(','')
+                                                                .replace(',)',''))
                                                                     
                 Data = GetStations.fetchall()
                 df = sort_dataset (df, Data, y_inputs, row)
@@ -114,7 +134,7 @@ def MergeStationsData   (ListStations,
         pd.set_option('display.max_columns', None)    
         del df['index']
         df.set_index('Date', inplace=True)        
-        df = df.resample(data_intervals).median().round(2).dropna(0)
+        df = df.resample(data_intervals).median().round(2).dropna(axis=0)
         df = LSTMhelpFunctions.extractTimeInfo(X_inputs, df)
             
         save_xls = df.tail(1)
@@ -123,7 +143,7 @@ def MergeStationsData   (ListStations,
         X = df[X_inputs]
         y = df.sort_index(axis = 0)
         y = y.drop(columns = X_inputs)
-
+        
         return X, y    
 
 def sort_dataset (df, Data, y_inputs, row):
@@ -137,19 +157,17 @@ def sort_dataset (df, Data, y_inputs, row):
         feature = {
             y_inputs[i]: [item[i+1] for item in Data],
         }
-        DataSet.update(feature)
-                
-    pd.set_option('display.max_columns', None)
-    df_db = pd.DataFrame(DataSet, columns = {"Date"})
-                
+        DataSet.update(feature)               
+    
+    df_db = pd.DataFrame(DataSet, columns = ["Date"])
+             
     for x in range(len(y_inputs)):
-        merge_column = pd.DataFrame(DataSet, columns = {"Date", y_inputs[x]})  
-        df_db = pd.merge_ordered(df_db, merge_column, how="outer") 
+        merge_column = pd.DataFrame(DataSet, columns = ["Date", y_inputs[x]])  
+        df_db = pd.merge_ordered(df_db, merge_column, how="outer").drop_duplicates()
     
     df_db.reset_index(inplace=True)
     df = pd.merge_ordered(df, df_db, how="outer")   
-    print ("\nLOADING...\n")
-    
+    print ("\nLOADING...\n")  
     return df
 
 def select_query (station_type, full_training):
@@ -169,8 +187,10 @@ def select_query (station_type, full_training):
                                     """
 
     elif station_type == "weather" and full_training == True:
+        #REMOVE AND "date" < '09/20/2022 04:00:00+09' its just to test a precipitation scenario
         dataset_query = """SELECT date AT TIME ZONE 'Asia/Dili', {}
                                     FROM assets.all_weather WHERE station = {}
+                                        AND "date" < '09/20/2022 04:00:00+09'  
                                         AND pressure > 800
                                         AND precipitation < 6
                                         AND humidity < 101
@@ -178,13 +198,14 @@ def select_query (station_type, full_training):
                                         AND temperature < 100
                                         AND dew_point > 16
                                         AND wind_speed > 0
+                                        AND wind_speed < 50
                                         ORDER BY date ASC;
                                         """
 
     elif station_type == "weather" and full_training == False:
         dataset_query = """SELECT date AT TIME ZONE 'Asia/Dili', {}
                                     FROM assets.all_weather WHERE station = {}
-                                        AND date AT TIME ZONE 'Asia/Dili' > {}
+                                        AND date AT TIME ZONE 'Asia/Dili' > {} 
                                         AND pressure > 800
                                         AND precipitation < 6
                                         AND humidity < 101
@@ -192,6 +213,7 @@ def select_query (station_type, full_training):
                                         AND temperature < 100
                                         AND dew_point > 16
                                         AND wind_speed > 0
+                                        AND wind_speed < 50
                                         ORDER BY date ASC;
                                         """
 
