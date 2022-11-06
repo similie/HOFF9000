@@ -5,8 +5,9 @@ __pycache__
 .env_dare_30min
 .env_dili_30min
 .env_water_tank
+.test
+
 
 env/
 .vscode/
-.test
 *.pyc
