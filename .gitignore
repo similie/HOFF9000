@@ -5,9 +5,8 @@ __pycache__
 .env_dare_30min
 .env_dili_30min
 .env_water_tank
-<<<<<<< HEAD
-.vscode
+
 env/
-=======
->>>>>>> 07da2b8f6bd42cb13760c740c9882feb1f77064c
+.vscode/
 .test
+*.pyc
