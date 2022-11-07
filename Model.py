@@ -2,7 +2,8 @@ import numpy as np
 
 # DEEP LEARNING MODEL
 from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, LSTM
+from tensorflow.keras.layers import Dense, LSTM, Dropout
+from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.metrics import mean_squared_error
 
@@ -18,6 +19,8 @@ def model_training (full_training,
                     model_path,
                     model_weights_path,
                     y_scaler):
+
+    early_stopping = EarlyStopping(monitor='val_loss', patience = 2)
 
     if full_training is True:
 
@@ -35,9 +38,10 @@ def model_training (full_training,
         model.add(LSTM(units = 50, return_sequences = True, input_shape = (X_data_reshaped.shape[1], X_data_reshaped.shape[2])))
 
         model.summary()
-        #model.add(Dropout(0.2))  # model seems to work best without dropout layers
+        # Droupout Layer 
         # Second LSTM layer 
         model.add(LSTM(units = 50, return_sequences = True))
+        model.add(Dropout(0.2))  
         # Third LSTM layer 
         model.add(LSTM(units = 50, return_sequences = True))
         # Adding a fourth LSTM layer 
@@ -48,7 +52,7 @@ def model_training (full_training,
         model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['accuracy'])
 
         # Fitting the RNN to the Training set
-        model.fit(X_data_reshaped, y_data_scaled, epochs = epochs, batch_size = batch_size)
+        model.fit(X_data_reshaped, y_data_scaled, epochs = epochs, batch_size = batch_size, validation_split=0.1, callbacks = [early_stopping])
         model.summary()
 
         # Save Model
