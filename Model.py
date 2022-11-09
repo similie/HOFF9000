@@ -34,25 +34,30 @@ def model_training (full_training,
         print ("y_data_scaled Shape: ", y_data_scaled.shape)
         print ("Batch Size: ", batch_size)
 
-        #CREATE LONG SHORT TERM MEMORY RECURRENT NEURAL NETWORK
-        model = Sequential()
-        #Adding the first LSTM layer 
-        model.add(LSTM(units = 50, return_sequences = True, input_shape = (X_data_reshaped.shape[1], X_data_reshaped.shape[2])))
+        def build_model (X_data_reshaped, y_data_scaled):
+            #CREATE LONG SHORT TERM MEMORY RECURRENT NEURAL NETWORK
+            model = Sequential()
+            #Adding the first LSTM layer 
+            model.add(LSTM(units = 50, return_sequences = True, input_shape = (X_data_reshaped.shape[1], X_data_reshaped.shape[2])))
 
-        model.summary()
-        # Droupout Layer 
-        # Second LSTM layer 
-        model.add(LSTM(units = 50, return_sequences = True))
-        model.add(Dropout(0.2))  
-        # Third LSTM layer 
-        model.add(LSTM(units = 50, return_sequences = True))
-        # Adding a fourth LSTM layer 
-        model.add(LSTM(units = 50))
-        # Adding the output layer
-        model.add(Dense(units = y_data_scaled.shape[1], activation = 'relu'))  # relu function keeps the model from giving negative outputs
-        # Compiling the RNN
-        model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['accuracy'])
+            model.summary()
+            # Droupout Layer 
+            # Second LSTM layer 
+            model.add(LSTM(units = 50, return_sequences = True))
+            model.add(Dropout(0.2))  
+            # Third LSTM layer 
+            model.add(LSTM(units = 50, return_sequences = True))
+            # Adding a fourth LSTM layer 
+            model.add(LSTM(units = 50))
+            # Adding the output layer
+            model.add(Dense(units = y_data_scaled.shape[1], activation = 'relu'))  # relu function keeps the model from giving negative outputs
+            # Compiling the RNN
+            model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['accuracy'])
+            
+            return model
 
+        build_model (X_data_reshaped, y_data_scaled)
+        
         # Fitting the RNN to the Training set
         model.fit(X_data_reshaped, y_data_scaled, epochs = epochs, batch_size = batch_size, validation_split=0.1, callbacks = [early_stopping])
         model.summary()
