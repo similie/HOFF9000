@@ -26,10 +26,10 @@ if __name__ == "__extractTimeInfo__":
 
 def future_time_series (hours, data_intervals, X_inputs):
 
-    #now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    now = "'2022-09-20 04:00:00'" #just for testing
-    #endtime = (datetime.now() + timedelta(hours = hours)).strftime("%Y-%m-%d %H:%M:%S")
-    endtime = "'2022-09-21 04:00:00'" #just for testing
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #now = "'2022-09-20 04:00:00'" #just for testing
+    endtime = (datetime.now() + timedelta(hours = hours)).strftime("%Y-%m-%d %H:%M:%S")
+    #endtime = "'2022-09-21 04:00:00'" #just for testing
     X_shift_index = pd.date_range(now, endtime, freq = data_intervals)
     X_shift_index = X_shift_index.floor(data_intervals)
     X_shift_data = pd.DataFrame(columns = X_inputs, index = X_shift_index)

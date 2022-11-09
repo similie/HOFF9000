@@ -5,6 +5,8 @@ from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, LSTM, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
 
+import keras_tuner
+
 from sklearn.metrics import mean_squared_error
 
 if __name__ == "__model_training__":

@@ -189,8 +189,7 @@ def select_query (station_type, full_training):
     elif station_type == "weather" and full_training == True:
         #REMOVE AND "date" < '09/20/2022 04:00:00+09' its just to test a precipitation scenario
         dataset_query = """SELECT date AT TIME ZONE 'Asia/Dili', {}
-                                    FROM assets.all_weather WHERE station = {}
-                                        AND "date" < '09/20/2022 04:00:00+09'  
+                                    FROM assets.all_weather WHERE station = {}                                        
                                         AND pressure > 800
                                         AND precipitation < 6
                                         AND humidity < 101

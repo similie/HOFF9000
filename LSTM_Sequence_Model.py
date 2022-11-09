@@ -24,14 +24,14 @@ import PlotGenerator
 import Model
 
 # SSH TUNNEL TO BARE METAL SERVER
-#with SSHTunnelForwarder(  
-#    config.IP_Address,
-#    ssh_username = config.username,
-#    ssh_pkey = config.PEM_Location,
-#    remote_bind_address = (config.bind_address, config.port),
-#    local_bind_address = (config.bind_address, config.port)):
+with SSHTunnelForwarder(  
+    config.IP_Address,
+    ssh_username = config.username,
+    ssh_pkey = config.PEM_Location,
+    remote_bind_address = (config.bind_address, config.port),
+    local_bind_address = (config.bind_address, config.port)):
     
-#    print ('SSH CONNECTION STARTED')
+    print ('SSH CONNECTION STARTED')
 
 #DB QUERIES AND DATASET CREATION
 
