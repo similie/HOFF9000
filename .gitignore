@@ -8,5 +8,6 @@ __pycache__
 
 env/
 .vscode/
+Keras_Tuner_Optimizer/
 .test
 *.pyc

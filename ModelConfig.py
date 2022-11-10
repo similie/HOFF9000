@@ -28,11 +28,11 @@ full_training = True    # SET full_training = True IF IT IS THE FIRST TIME RUNNI
                         # SET full_training = False IN ORDER TO RETRAIN MODEL FROM LAST TIME STAMP
  
 station = 27            # SELECT STATION ID FOR ANALYSIS Ex: Dare = 4; Similie HQ = 27 (check database for other stations)
-limit = 1               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE ALGORITHM
+limit = 3               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE ALGORITHM
 hours = 24              # NUMBER OF HOURS FOR FORECAST - Needs testing
 data_intervals = '10T'  # SELECT THE INTERVALS FOR THE DATA 10T/30T/1H/1D etc (T = minutes)
 batch_size = 1          # NUMBER OF SAMPLES PROPAGATED THROUGH THE NETWORK. Batch Size = 1, For Online Training
-epochs = 200             # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
+epochs = 100            # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
 
 ###################################
 #### DEFINE X AND Y PARAMETERS ####
