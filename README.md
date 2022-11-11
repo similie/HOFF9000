@@ -31,6 +31,9 @@ Create an venv:
 Activate venv:
 > source <venv>/bin/activate
 
+Install Requirements (libraries):
+> python -m pip install requirements.txt
+
 Run script LSTM_Sequence_Model.py:
 > python -m LSTM_Sequence_Model
 
