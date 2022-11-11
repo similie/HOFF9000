@@ -20,24 +20,24 @@ The event  data was recorded by weather stations owned  by GoTL and Similie.
 
 **How to run it:**
 
-Install Python:
+1. *Install Python:*
 > brew install python
 
 Note: Brew should install Pip 
 
-Create an venv:
+2. *Create an venv:*
 > python3 -m venv /path/to/new/virtual/environment
 
-Activate venv:
+3. *Activate venv:*
 > source <venv>/bin/activate
 
-Install Requirements (libraries):
+4. *Install Requirements (libraries):*
 > python -m pip install requirements.txt
 
-Run script LSTM_Sequence_Model.py:
+5. *Run script LSTM_Sequence_Model.py:*
 > python -m LSTM_Sequence_Model
 
-Run the script with logs (reccomendded):
+6. *Run the script with logs (reccomendded):*
 > python -m LSTM_Sequence_Model > /path/to/logs.txt
 
 **Model Overview:**
