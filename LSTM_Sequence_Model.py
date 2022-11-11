@@ -12,7 +12,7 @@ import ModelConfig as config
 import pandas as pd
 import numpy as np
 import copy
-import openpyxl
+import time
 
 # SSH TUNNEL
 from sshtunnel import SSHTunnelForwarder
@@ -22,6 +22,8 @@ import DBQueryFunctions
 import LSTMhelpFunctions 
 import PlotGenerator
 import Model
+
+start_time = time.time()
 
 # SSH TUNNEL TO BARE METAL SERVER
 with SSHTunnelForwarder(  
@@ -99,12 +101,13 @@ for row in ListStations:
 
 print ("\n final_pred_output\n ", final_pred_output)
 
-predictions = Model.model_training  (config.full_training, 
+predictions = Model.model_training  (config.full_training,
                                     X_data_reshaped,
                                     y_data_scaled,
                                     config.epochs,
                                     config.batch_size,
                                     X_shift_reshaped,
+                                    config.Keras_Tuner_path,
                                     config.model_path,
                                     config.model_weights_path,
                                     y_scaler)
@@ -117,6 +120,7 @@ print ("predictions_df shape", predictions_df.shape)
 
 predictions_df.to_excel(config.retrain_predictions_output_path, index = True)
 
+print("\n\n\n\n\n--- %s seconds ---" % (time.time() - start_time))
 
 PlotGenerator.plot_T_DP_graph   (final_pred_output, 
                                 predictions_df, 

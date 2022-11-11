@@ -18,6 +18,25 @@ The event  data was recorded by weather stations owned  by GoTL and Similie.
 
 ![image](https://user-images.githubusercontent.com/29231033/113271869-f2adba00-9315-11eb-881b-6307b4ba3d9a.png)
 
+**How to run it:**
+
+Install Python:
+> brew install python
+
+Note: Brew should install Pip 
+
+Create an venv:
+> python3 -m venv /path/to/new/virtual/environment
+
+Activate venv:
+> source <venv>/bin/activate
+
+Run script LSTM_Sequence_Model.py:
+> python -m LSTM_Sequence_Model
+
+Run the script with logs (reccomendded):
+> python -m LSTM_Sequence_Model > /path/to/logs.txt
+
 **Model Overview:**
 - Long Short-Term Memory (LSTM) - Recurrent Neural Network (Deep Learning). 
 - LSTM has been widely used for weather forecasting algorithms, energy and water consumption and stock market prediction models. 

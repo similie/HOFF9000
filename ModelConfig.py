@@ -28,11 +28,11 @@ full_training = True    # SET full_training = True IF IT IS THE FIRST TIME RUNNI
                         # SET full_training = False IN ORDER TO RETRAIN MODEL FROM LAST TIME STAMP
  
 station = 27            # SELECT STATION ID FOR ANALYSIS Ex: Dare = 4; Similie HQ = 27 (check database for other stations)
-limit = 3               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE ALGORITHM
+limit = 2               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE ALGORITHM
 hours = 24              # NUMBER OF HOURS FOR FORECAST - Needs testing
 data_intervals = '10T'  # SELECT THE INTERVALS FOR THE DATA 10T/30T/1H/1D etc (T = minutes)
 batch_size = 1          # NUMBER OF SAMPLES PROPAGATED THROUGH THE NETWORK. Batch Size = 1, For Online Training
-epochs = 100            # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
+epochs = 10             # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
 
 ###################################
 #### DEFINE X AND Y PARAMETERS ####
@@ -51,7 +51,14 @@ station_type = "weather"
 # y_inputs ARE THE FEATURES IN THE SEQUENTIAL MODEL THAT YOU WANT TO RELATE TO A TIME SEQUENCE (X_inputs) 
 # WEATHER FEATURES AVAILABLE  ["temperature", "dew_point", "T-DP Variance", "humidity", "pressure", "wind_speed", "wind_direction", "solar"]
 
-y_inputs = ["temperature", "dew_point", "T-DP Variance", "humidity", "pressure", "wind_speed", "wind_direction", "solar"] 
+y_inputs = ["temperature", 
+            "dew_point", 
+            "T-DP Variance", 
+            "humidity", 
+            "pressure", 
+            "wind_speed", 
+            "wind_direction", 
+            "solar"] 
 
 # WATER TANK FEATURES AVAILABLE 
 
@@ -61,7 +68,18 @@ y_inputs = ["temperature", "dew_point", "T-DP Variance", "humidity", "pressure",
 
 # pred_output FEATURES THAT WILL BE PREDICTED
 
-pred_output = ["Pred Temperature", "Pred Dew Point", "Pred T-DP Variance", "Pred Humidity", "Pred Pressure", "Pred Wind Speed", "Pred Wind Direction", "Pred Solar"] # PREDICTED OUTPUTS FOR WEATHER
+# OUTPUT FOR WEATHER 
+pred_output = ["Pred Temperature", 
+                "Pred Dew Point", 
+                "Pred T-DP Variance", 
+                "Pred Humidity", 
+                "Pred Pressure", 
+                "Pred Wind Speed", 
+                "Pred Wind Direction", 
+                "Pred Solar"] 
+
+# OUTPUT WATER TANKS 
+
 #pred_output = ["Pred percent_full", "Pred tank_health", "Pred liters", "Pred water_level"]
 #pred_output = ["Pred water_level"]
 
@@ -69,16 +87,24 @@ pred_output = ["Pred Temperature", "Pred Dew Point", "Pred T-DP Variance", "Pred
 # FULL TRAINING FILE PATHS #
 ############################
 
-last_dataset_row_path = '{}/last_dataset_row.xls'.format(os.getenv("last_dataset_row_path"))
-X_scaler_path = '{}/Model_Scaler_X.gz'.format(os.getenv("X_scaler_path"))                               
-y_scaler_path = '{}/Model_Scaler_y.gz'.format(os.getenv("X_scaler_path"))                               
-model_path = '{}/LSTM_Model_Forecast_24h_Interval-30min_batch-1.h5'.format(os.getenv("model_path"))     
-model_weights_path = '{}/LSTM_Model_WEIGHTS_Forecast_24h_Interval-30min_batch-1.h5'.format(os.getenv("model_weights_path"))
-predictions_output_path = '{}/Sequence_24hForecast_Output.xls'.format(os.getenv("predictions_output_path"))
-fig_save_path = '{}/Pred_T_and_DP.png'.format(os.getenv("predictions_output_path"))
+model_output_folder = "model_output_folder" 
+model_retrain_output_folder = "model_retrain_output_folder"
 
-# RETRAINING FILE PATHS
+Keras_Tuner_path = '{}/Keras_Tuner_Optimizer'.format(os.getenv("folder_path")) #OPTIMIZER 
 
-last_retrain_dataset_row_path = '{}/last_retrain_dataset_row.xlsx'.format(os.getenv("last_retrain_dataset_row_path"))
-retrain_predictions_output_path  = '{}/Retrain_Output.xlsx'.format(os.getenv("retrain_predictions_output_path"))
-retrain_figure1_save = '{}/Retrain_Pred_T_and_DP.png'.format(os.getenv("retrain_figure1_save"))
+last_dataset_row_path = '{}/{}/last_dataset_row.xls'.format(os.getenv("folder_path"), "model_output_folder")     
+
+X_scaler_path = '{}/{}/Model_Scaler_X.gz'.format(os.getenv("folder_path"), "model_output_folder")                                 
+y_scaler_path = '{}/{}/Model_Scaler_y.gz'.format(os.getenv("folder_path"), "model_output_folder")                             
+model_path = '{}/{}/LSTM_Model_Forecast_24h_Interval-30min_batch-1.h5'.format(os.getenv("folder_path"), "model_output_folder")    
+model_weights_path = '{}/{}/LSTM_Model_WEIGHTS_Forecast_24h_Interval-30min_batch-1.h5'.format(os.getenv("folder_path"), "model_output_folder") 
+predictions_output_path = '{}/{}/Sequence_24hForecast_Output.xls'.format(os.getenv("folder_path"), "model_output_folder")  
+fig_save_path = '{}/{}/Pred_T_and_DP.png'.format(os.getenv("folder_path"), "model_output_folder") 
+
+#########################
+# RETRAINING FILE PATHS #
+#########################
+
+last_retrain_dataset_row_path = '{}/{}/last_retrain_dataset_row.xlsx'.format(os.getenv("folder_path"), "model_retrain_output_folder")
+retrain_predictions_output_path  = '{}/{}/Retrain_Output.xlsx'.format(os.getenv("folder_path"), "model_retrain_output_folder")
+retrain_figure1_save = '{}/{}/Retrain_Pred_T_and_DP.png'.format(os.getenv("folder_path"), "model_retrain_output_folder") 

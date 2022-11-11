@@ -18,6 +18,7 @@ def model_training (full_training,
                     epochs,
                     batch_size,
                     X_shift_reshaped,
+                    Keras_Tuner_path,
                     model_path,
                     model_weights_path,
                     y_scaler):
@@ -63,18 +64,18 @@ def model_training (full_training,
         build_model (keras_tuner.HyperParameters())
 
         tuner = keras_tuner.RandomSearch(
-            hypermodel=build_model,
-            objective="val_loss",
-            max_trials=5,
-            executions_per_trial=2,
-            overwrite=True,
-            directory="/Users/telmopaiva/Documents/ML_Python/LSTM_Sequence_Forecast/Keras_Tuner_Optimizer",
-            project_name="test",
+            hypermodel = build_model,
+            objective = "val_loss",
+            max_trials = 5,
+            executions_per_trial = 2,
+            overwrite = True,
+            directory = Keras_Tuner_path,
+            project_name = "Optimizer",
         )
         
         tuner.search_space_summary()
         print ("\n\n")
-        tuner.search(X_data_reshaped, y_data_scaled, epochs = 10, batch_size = 1, validation_split=0.1, callbacks = [early_stopping]) 
+        tuner.search(X_data_reshaped, y_data_scaled, epochs = epochs, batch_size = 1, validation_split=0.1, callbacks = [early_stopping]) 
         print ("\n\n")
         tuner.results_summary()
         print ("\n\n")
