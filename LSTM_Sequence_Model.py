@@ -96,10 +96,7 @@ for row in ListStations:
 
 print ("\n final_pred_output\n ", final_pred_output)
 
-best_hyperparameters = Optimizer.model_training (X_data_reshaped,
-                                        y_data_scaled,
-                                        X_shift_reshaped,
-                                        y_scaler)
+best_hyperparameters = Optimizer.model_training (X_data_reshaped, y_data_scaled)
 
 quit()
 

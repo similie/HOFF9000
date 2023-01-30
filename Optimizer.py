@@ -19,9 +19,7 @@ if __name__ == "__tuner_optimizer__":
     tuner_optimizer ()
 
 def model_training (X_data_reshaped,
-                    y_data_scaled,
-                    X_shift_reshaped,                    
-                    y_scaler):
+                    y_data_scaled):
 
 
     epochs = config.epochs
