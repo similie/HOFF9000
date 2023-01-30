@@ -1,5 +1,5 @@
+import config as config
 import numpy as np
-from numpy import array
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
@@ -24,24 +24,29 @@ if __name__ == "__extractTimeInfo__":
     extractTimeInfo ()
        
 
-def future_time_series (hours, data_intervals, X_inputs):
+def future_time_series ():
 
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #now = "'2022-09-20 04:00:00'" #just for testing
-    endtime = (datetime.now() + timedelta(hours = hours)).strftime("%Y-%m-%d %H:%M:%S")
-    #endtime = "'2022-09-21 04:00:00'" #just for testing
+    hours = config.hours
+    data_intervals = config.data_intervals
+    X_inputs = config.X_inputs
+
+    #now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = "'2022-09-20 04:00:00'" #just for testing
+    #endtime = (datetime.now() + timedelta(hours = hours)).strftime("%Y-%m-%d %H:%M:%S")
+    endtime = "'2022-09-21 04:00:00'" #just for testing
     X_shift_index = pd.date_range(now, endtime, freq = data_intervals)
     X_shift_index = X_shift_index.floor(data_intervals)
     X_shift_data = pd.DataFrame(columns = X_inputs, index = X_shift_index)
 
     return X_shift_data
     
-def data_scalling   (full_training, 
-                    X_data, 
+def data_scalling   (X_data, 
                     X_shift_data, 
-                    y_data, 
-                    X_scaler_path, 
-                    y_scaler_path):
+                    y_data):
+
+    full_training = config.full_training
+    X_scaler_path = config.X_scaler_path
+    y_scaler_path = config.y_scaler_path 
     
     print("full_training",full_training)
 
@@ -92,7 +97,9 @@ def data_reshape (X_train_scaled, X_test_scaled, time_steps, X_train_length, X_t
 
     return X_train_reshaped, X_test_reshaped
 
-def extractTimeInfo (X_inputs, df):
+def extractTimeInfo (df):
+
+    X_inputs = config.X_inputs
 
     #FUNCTION TO EXTRACT DATE FEATURES (YEAR/MONTH/DAY/HOUR) FROM DATAFRAME INDEX
 
@@ -108,6 +115,8 @@ def extractTimeInfo (X_inputs, df):
             df["Day"] = pd.to_datetime(df["Date"]).dt.strftime("%d").astype(int)
         elif column == 'Hour':
             df["Hour"] = pd.to_datetime(df["Date"], format='%H:%M:%S').dt.hour.astype(int)
+        elif column == 'Quarter':
+            df["Quarter"] = pd.to_datetime(df["Date"]).dt.quarter
         else: 
             print ("Error: You have choosen an inexistent DateTime/Sequence variable")
             quit()

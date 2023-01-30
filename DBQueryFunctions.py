@@ -1,5 +1,5 @@
 # MODEL CONFIG
-import ModelConfig as config
+import config as config
 
 import copy
 
@@ -135,7 +135,7 @@ def MergeStationsData   (ListStations,
         del df['index']
         df.set_index('Date', inplace=True)        
         df = df.resample(data_intervals).median().round(2).dropna(axis=0)
-        df = LSTMhelpFunctions.extractTimeInfo(X_inputs, df)
+        df = LSTMhelpFunctions.extractTimeInfo(df)
             
         save_xls = df.tail(1)
         save_xls.to_excel(last_retrain_dataset_row_path)

@@ -6,7 +6,7 @@
 ###################################################
 
 # MODEL CONFIG
-import ModelConfig as config
+import config as config
 
 # THE USUAL SUSPECTS
 import pandas as pd
@@ -21,19 +21,19 @@ from sshtunnel import SSHTunnelForwarder
 import DBQueryFunctions  
 import LSTMhelpFunctions 
 import PlotGenerator
-import Model
+import Optimizer
 
 start_time = time.time()
 
 # SSH TUNNEL TO BARE METAL SERVER
-with SSHTunnelForwarder(  
-    config.IP_Address,
-    ssh_username = config.username,
-    ssh_pkey = config.PEM_Location,
-    remote_bind_address = (config.bind_address, config.port),
-    local_bind_address = (config.bind_address, config.port)):
+# with SSHTunnelForwarder(  
+#     config.IP_Address,
+#     ssh_username = config.username,
+#     ssh_pkey = config.PEM_Location,
+#     remote_bind_address = (config.bind_address, config.port),
+#     local_bind_address = (config.bind_address, config.port)):
     
-    print ('SSH CONNECTION STARTED')
+#     print ('SSH CONNECTION STARTED')
 
 #DB QUERIES AND DATASET CREATION
 
@@ -56,11 +56,9 @@ print ("y_data shape: ", y_data.shape)
 print ("X_data shape: ", X_data.shape)
 
 # FUTURE TIME SERIES SEQUENCE
-X_shift_data = LSTMhelpFunctions.future_time_series (config.hours,
-                                                    config.data_intervals, 
-                                                    config.X_inputs)
+X_shift_data = LSTMhelpFunctions.future_time_series ()
 
-X_shift_data = LSTMhelpFunctions.extractTimeInfo(config.X_inputs, X_shift_data)
+X_shift_data = LSTMhelpFunctions.extractTimeInfo (X_shift_data)
 
 num_data = len(X_data) - len(X_shift_data)
 y_test_data = y_data[num_data:] #REAL DATA FOR PLOTTING
@@ -72,12 +70,9 @@ print ("X_shift_data", X_shift_data)
 print ("X_shift_data shape: ", X_shift_data.shape)
 
 # FEATURE SCALLING
-X_data_scaled, X_shift_scaled, y_data_scaled, y_scaler = LSTMhelpFunctions.data_scalling    (config.full_training, 
-                                                                                            X_data, 
+X_data_scaled, X_shift_scaled, y_data_scaled, y_scaler = LSTMhelpFunctions.data_scalling (X_data, 
                                                                                             X_shift_data, 
-                                                                                            y_data,
-                                                                                            config.X_scaler_path, 
-                                                                                            config.y_scaler_path)
+                                                                                            y_data)
 
 # DATA INPUT RESHAPING 
 X_data_reshaped = X_data_scaled.reshape (X_data.shape[0], 1, X_data.shape[1])
@@ -101,16 +96,27 @@ for row in ListStations:
 
 print ("\n final_pred_output\n ", final_pred_output)
 
-predictions = Model.model_training  (config.full_training,
-                                    X_data_reshaped,
-                                    y_data_scaled,
-                                    config.epochs,
-                                    config.batch_size,
-                                    X_shift_reshaped,
-                                    config.Keras_Tuner_path,
-                                    config.model_path,
-                                    config.model_weights_path,
-                                    y_scaler)
+best_hyperparameters = Optimizer.model_training (X_data_reshaped,
+                                        y_data_scaled,
+                                        X_shift_reshaped,
+                                        y_scaler)
+
+quit()
+
+full_train = Model_Full_Training.model_Training ()
+
+retrain = Model_Retraining.model_Training ()
+
+# predictions = Model.model_training  (config.full_training,
+#                                     X_data_reshaped,
+#                                     y_data_scaled,
+#                                     config.epochs,
+#                                     config.batch_size,
+#                                     X_shift_reshaped,
+#                                     config.Keras_Tuner_path,
+#                                     config.model_path,
+#                                     config.model_weights_path,
+#                                     y_scaler)
 
 predictions_df = pd.DataFrame(predictions, columns = final_pred_output, index = X_shift_data.index)
 

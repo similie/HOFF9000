@@ -38,18 +38,23 @@ epochs = 10             # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAI
 #### DEFINE X AND Y PARAMETERS ####
 ###################################
 
-# X_inputs ARE SPECIFIC FEATURES USED FOR TIME SERIES PREDICTIONS
-# THEY NEED TO BE TIME RELATED, SEQUENTIAL AND PREDICTABLE
-# CURRENT CODE ONLY SUPPORTS 5 OPTIONS: "Date Seq", "Hour", "Day", "Month", "Year".
+# X_inputs 
+# TIME SERIES FEATURES
 
-X_inputs = ["Date Seq", "Hour", "Day", "Month", "Year"] 
-#X_inputs = ["Date Seq", "Hour"]
+X_inputs = ["Date Seq", 
+                "Hour", 
+                "Day", 
+                "Month", 
+                "Year",
+                "Quarter"] 
 
-# CURRENTLY MODEL WORKS FOR WEATHER ("weather") OR WATER TANKS ("water"). BE SURE TO SELECT THE CORRECT  TYPE.
+
+# CURRENTLY MODEL WORKS FOR WEATHER ("weather") OR WATER TANKS ("water"). 
 station_type = "weather"
 
-# y_inputs ARE THE FEATURES IN THE SEQUENTIAL MODEL THAT YOU WANT TO RELATE TO A TIME SEQUENCE (X_inputs) 
-# WEATHER FEATURES AVAILABLE  ["temperature", "dew_point", "T-DP Variance", "humidity", "pressure", "wind_speed", "wind_direction", "solar"]
+# y_inputs 
+# TO BE PREDICTED
+# WEATHER FEATURES 
 
 y_inputs = ["temperature", 
             "dew_point", 
@@ -60,15 +65,13 @@ y_inputs = ["temperature",
             "wind_direction", 
             "solar"] 
 
-# WATER TANK FEATURES AVAILABLE 
+# WATER TANK FEATURES  
 
 #y_inputs = ["percent_full", "tank_health", "liters", "water_level"] 
 
-#y_inputs = ["water_level"] # River Bridge
+# PREDICTED FEATURES
 
-# pred_output FEATURES THAT WILL BE PREDICTED
-
-# OUTPUT FOR WEATHER 
+# OUTPUT WEATHER 
 pred_output = ["Pred Temperature", 
                 "Pred Dew Point", 
                 "Pred T-DP Variance", 
