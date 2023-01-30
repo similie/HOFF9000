@@ -32,7 +32,7 @@ limit = 2               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE A
 hours = 24              # NUMBER OF HOURS FOR FORECAST - Needs testing
 data_intervals = '10T'  # SELECT THE INTERVALS FOR THE DATA 10T/30T/1H/1D etc (T = minutes)
 batch_size = 1          # NUMBER OF SAMPLES PROPAGATED THROUGH THE NETWORK. Batch Size = 1, For Online Training
-epochs = 10             # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
+epochs = 100             # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
 
 ###################################
 #### DEFINE X AND Y PARAMETERS ####
