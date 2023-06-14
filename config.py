@@ -31,8 +31,8 @@ station = 27            # SELECT STATION ID FOR ANALYSIS Ex: Dare = 4; Similie H
 limit = 2               # SELECT THE NUMBER OF NEARBY STATIONS TO MERGE IN THE ALGORITHM
 hours = 24              # NUMBER OF HOURS FOR FORECAST - Needs testing
 data_intervals = '10T'  # SELECT THE INTERVALS FOR THE DATA 10T/30T/1H/1D etc (T = minutes)
-batch_size = 1          # NUMBER OF SAMPLES PROPAGATED THROUGH THE NETWORK. Batch Size = 1, For Online Training
-epochs = 100             # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
+batch_size = 100          # NUMBER OF SAMPLES PROPAGATED THROUGH THE NETWORK. Batch Size = 1, For Online Training
+epochs = 1            # NUMEBR OF TIMES THE MODEL CYCLES THROUGH THE FULL TRAINING DATASET
 
 ###################################
 #### DEFINE X AND Y PARAMETERS ####
@@ -87,20 +87,10 @@ pred_output = ["Pred Temperature",
 #pred_output = ["Pred water_level"]
 
 ############################
-# FULL TRAINING FILE PATHS #
+# LEGACY FILE PATHS #
 ############################
 
-model_output_folder = "model_output_folder" 
-model_retrain_output_folder = "model_retrain_output_folder"
-
-Keras_Tuner_path = '{}/Keras_Tuner_Optimizer'.format(os.getenv("folder_path")) #OPTIMIZER 
-
 last_dataset_row_path = '{}/{}/last_dataset_row.xls'.format(os.getenv("folder_path"), "model_output_folder")     
-
-X_scaler_path = '{}/{}/Model_Scaler_X.gz'.format(os.getenv("folder_path"), "model_output_folder")                                 
-y_scaler_path = '{}/{}/Model_Scaler_y.gz'.format(os.getenv("folder_path"), "model_output_folder")                             
-model_path = '{}/{}/LSTM_Model_Forecast_24h_Interval-30min_batch-1.h5'.format(os.getenv("folder_path"), "model_output_folder")    
-model_weights_path = '{}/{}/LSTM_Model_WEIGHTS_Forecast_24h_Interval-30min_batch-1.h5'.format(os.getenv("folder_path"), "model_output_folder") 
 predictions_output_path = '{}/{}/Sequence_24hForecast_Output.xls'.format(os.getenv("folder_path"), "model_output_folder")  
 fig_save_path = '{}/{}/Pred_T_and_DP.png'.format(os.getenv("folder_path"), "model_output_folder") 
 

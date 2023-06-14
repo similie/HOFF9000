@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
+import os
+import folder_class
 
 # PREPROCESSING
 from sklearn.preprocessing import MinMaxScaler
@@ -45,9 +47,11 @@ def data_scalling   (X_data,
                     y_data):
 
     full_training = config.full_training
-    X_scaler_path = config.X_scaler_path
-    y_scaler_path = config.y_scaler_path 
-    
+
+    data_scaling = folder_class.folder.create("data_scaling")
+    X_scaler_path = os.path.join(data_scaling, 'Model_Scaler_X.gz')
+    y_scaler_path = os.path.join(data_scaling, 'Model_Scaler_y.gz')
+
     print("full_training",full_training)
 
     if full_training is True:
@@ -62,7 +66,7 @@ def data_scalling   (X_data,
         y_data_scaled = np.reshape(y_data, (y_data.shape[0],  y_data.shape[1]))
         y_data_scaled = y_scaler.fit_transform(y_data_scaled)
 
-        #Save Scaler
+        #Save Scaler       
         joblib.dump(X_scaler, X_scaler_path) 
         joblib.dump(y_scaler, y_scaler_path) 
 

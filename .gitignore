@@ -11,5 +11,9 @@ env/
 Keras_Tuner_Optimizer/
 model_retrain_output_folder/
 model_output_folder/
+logs/
+data_scaling/
+Optimizer/
+.checkpoint
 .test
 *.pyc

@@ -22,6 +22,10 @@ import DBQueryFunctions
 import LSTMhelpFunctions 
 import PlotGenerator
 import Optimizer
+import Full_Train
+import Retrain
+
+import Trainning
 
 start_time = time.time()
 
@@ -36,7 +40,6 @@ start_time = time.time()
 #     print ('SSH CONNECTION STARTED')
 
 #DB QUERIES AND DATASET CREATION
-
 ListStations = DBQueryFunctions.GetListStation (config.station, 
                                                 config.limit)
 
@@ -55,6 +58,7 @@ print ("y_data\n", y_data)
 print ("y_data shape: ", y_data.shape)
 print ("X_data shape: ", X_data.shape)
 
+
 # FUTURE TIME SERIES SEQUENCE
 X_shift_data = LSTMhelpFunctions.future_time_series ()
 
@@ -70,16 +74,14 @@ print ("X_shift_data", X_shift_data)
 print ("X_shift_data shape: ", X_shift_data.shape)
 
 # FEATURE SCALLING
-X_data_scaled, X_shift_scaled, y_data_scaled, y_scaler = LSTMhelpFunctions.data_scalling (X_data, 
-                                                                                            X_shift_data, 
-                                                                                            y_data)
+X_data_scaled, X_shift_scaled, y_data_scaled, y_scaler = LSTMhelpFunctions.data_scalling (X_data, X_shift_data, y_data)
 
 # DATA INPUT RESHAPING 
 X_data_reshaped = X_data_scaled.reshape (X_data.shape[0], 1, X_data.shape[1])
 
 X_shift_reshaped = X_shift_scaled.reshape (X_shift_data.shape[0], 1, X_shift_data.shape[1])
 
-# CREATE PREDICTION HEADERS 
+# CREATE PREDICTION HEADERS (fix this)
 
 final_pred_output = []
 
@@ -93,27 +95,23 @@ for row in ListStations:
         
     final_pred_output.extend(n_pred_output)  
 
-
 print ("\n final_pred_output\n ", final_pred_output)
 
-best_hyperparameters = Optimizer.model_training (X_data_reshaped, y_data_scaled)
+model = Trainning.Train_Model (X_data_reshaped, X_shift_reshaped, y_data_scaled)
+model.variables (X_data_reshaped, X_shift_reshaped, y_data_scaled)
+
+model.Optimizer ()
+model.Full_Train ()
+model.Re_Train ()
+
+
+# Optimizer.model_optimizer (X_data_reshaped, y_data_scaled)
+
+# Full_Train.Model_Full_Training (X_data_reshaped, y_data_scaled, X_shift_reshaped)
+
+# Retrain.Model_Retrain (X_data_reshaped, y_data_scaled, X_shift_reshaped)
 
 quit()
-
-full_train = Model_Full_Training.model_Training ()
-
-retrain = Model_Retraining.model_Training ()
-
-# predictions = Model.model_training  (config.full_training,
-#                                     X_data_reshaped,
-#                                     y_data_scaled,
-#                                     config.epochs,
-#                                     config.batch_size,
-#                                     X_shift_reshaped,
-#                                     config.Keras_Tuner_path,
-#                                     config.model_path,
-#                                     config.model_weights_path,
-#                                     y_scaler)
 
 predictions_df = pd.DataFrame(predictions, columns = final_pred_output, index = X_shift_data.index)
 
