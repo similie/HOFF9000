@@ -3,15 +3,15 @@
 [<img src="https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png" width="100px" />](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png)
 &nbsp;&nbsp;&nbsp;&nbsp;
 
-## Deprecated.  
+**Deprecated**  
 This repo is no longer being actively worked on or maintained in favour of Similie's later work on this topic, which adds a FastAPI webservice to run rainfall predictions from either measured and forecast weather data. Interested contributors can head over to Tabula Rasa's new home, [here](https://github.com/similie/fastapi-ml-wrapper)  
 
-**Project Overview:**
+##Project Overview:
 "Tabula rasa is the theory that individuals are born without built-in mental content, and therefore all knowledge comes from experience or perception."
 
 This repository is a collaboration project between [Similie](https://similie.org). We are building a localized early warning solution for data-poor economies and started the Tabula Rasa project with the goal of leveraging machine learning algorithms geared toward predicting various indicators relevant in the detection of flash floods and other natural disaster occurrences. In the event of natural disaster, we seek to build affordable solutions where individuals living in underserved economies can have advanced warnings required to move their resources and their families to safety. Tabula Rasa is a machine-learning component that offers predictive outputs of local environmental data aimed at improving our time before event metrics. 
 
-In its current iteration, we use data from a rang of low-cost IoT sensors gathering precipitation, river water levels, soil moisture, and other atmospheric parameters to train forecasted precipitation outputs. Our next phases will attempt to use these prediction models to adjust thresholds for what constitutes a potential early warning event. For example, when precipitation at station A records X and the water level at station B records Y, what is the probability of an event for area C? X and Y are optimizations that Tabula Rasa will attempt to solve.
+In its current iteration, we use data from a range of low-cost IoT sensors gathering precipitation, river water levels, soil moisture, and other atmospheric parameters to train forecasted precipitation outputs. Our next phases will attempt to use these prediction models to adjust thresholds for what constitutes a potential early warning event. For example, when precipitation at station A records X and the water level at station B records Y, what is the probability of an event for area C? X and Y are optimizations that Tabula Rasa will attempt to solve.
  
 This initial attempt was trialed in Timor-Leste where the lack of adequate weather, water catchment, and other environmental data is scarce. Compounded by increasingly unpredictable climate change-based weather patterns and human-induced deforestation, flash flooding events have become a devastating force in an already vulnerable and resource poor economy. For example, on March 13th of 2020, Timor-Leste experienced an extreme weather event which cost millions of dollars for the Dili urban area.
 
