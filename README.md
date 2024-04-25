@@ -3,6 +3,9 @@
 [<img src="https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png" width="100px" />](https://user-images.githubusercontent.com/29231033/113271826-e3c70780-9315-11eb-8243-8f7f5b35dbed.png)
 &nbsp;&nbsp;&nbsp;&nbsp;
 
+## Deprecated.  
+This repo is no longer being actively worked on or maintained in favour of Similie's later work on this topic, which adds a FastAPI webservice to run rainfall predictions from either measured and forecast weather data. Interested contributors can head over to Tabula Rasa's new home, [here](https://github.com/similie/fastapi-ml-wrapper)  
+
 **Project Overview:**
 "Tabula rasa is the theory that individuals are born without built-in mental content, and therefore all knowledge comes from experience or perception."
 
