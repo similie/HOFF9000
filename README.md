@@ -6,7 +6,7 @@
 **Deprecated**  
 This repo is no longer being actively worked on or maintained in favour of Similie's later work on this topic, which adds a FastAPI webservice to run rainfall predictions from either measured and forecast weather data. Interested contributors can head over to Tabula Rasa's new home, [here](https://github.com/similie/fastapi-ml-wrapper)  
 
-##Project Overview:
+## Project Overview:  
 "Tabula rasa is the theory that individuals are born without built-in mental content, and therefore all knowledge comes from experience or perception."
 
 This repository is a collaboration project between [Similie](https://similie.org). We are building a localized early warning solution for data-poor economies and started the Tabula Rasa project with the goal of leveraging machine learning algorithms geared toward predicting various indicators relevant in the detection of flash floods and other natural disaster occurrences. In the event of natural disaster, we seek to build affordable solutions where individuals living in underserved economies can have advanced warnings required to move their resources and their families to safety. Tabula Rasa is a machine-learning component that offers predictive outputs of local environmental data aimed at improving our time before event metrics. 
